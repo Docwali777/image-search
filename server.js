@@ -10,7 +10,7 @@ const Image = require('./Schemas/imagesSchema')
 
 
 var pics = new Image({
-  url: 'https://www.people.com'
+  url: 'https://www.WALIGAUVIN.com'
 })
 
 
@@ -21,7 +21,9 @@ mongoose.connection.on('error', (err)=>{
   console.log('connected');
 })
 
-mongoose.connect('mongodb://localhost/images')
+var url = process.env.MONGODB_URI || 'mongodb://localhost/images'
+console.log(url)
+mongoose.connect(url)
 
 pics.save((err)=>{
   console.log('pics saved')
