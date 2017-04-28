@@ -51,7 +51,7 @@ app.set('view engine', 'ejs')
   app.get('/',(req, res)=>{
 let myURL = new URL('localhost:3000')
 
-res.redirect(`http://${myURL.href}/search/camp?page=11`)
+res.redirect(`https://${myURL.href}/search/camp?page=11`)
   })
 
 app.get('/search/:data', (req, res)=>{
