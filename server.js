@@ -27,7 +27,7 @@ if(req.params.data === 'recent'){
     if(err){console.log(err)}
     else{
       res.render('recent', {
-        site: site.splice(-9, site.length-1)
+        site: site.splice(-10, site.length-1)
       })
     }
   })
