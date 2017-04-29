@@ -2,6 +2,7 @@
 Page: <%= page %>
 <% data.map(d=>{ %>
  <p> <%= d.tags  %></p>
- <p> <a href="<%= d.pageURL %>"><%= d.pageURL %></a></p>
+ <p> <a href="<%= d.webformatURL %>"><%= d.pageURL %></a></p>
+  <a href="<%= d.webformatURL %>"><img style='height: 70px;width:auto' src="<%= d.webformatURL %>" alt=""></a>
  <hr>
 <% }) %>
