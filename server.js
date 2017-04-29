@@ -22,7 +22,16 @@ app.get('/', (req, res) => {
 
 app.route('/search/:data')
 .get((req, res) => {
-
+if(req.params.data === 'recent'){
+  imageSchema.find({}, (err, site)=>{
+    if(err){console.log(err)}
+    else{
+      res.send(site.splice(0, 9))
+    }
+  })
+}
+else
+{
   let pic = new imageSchema({
     query: req.params.data,
     info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}&per_page=5`,
@@ -45,7 +54,7 @@ fetch(site[site.length-1].info, (err, meta, body)=>{
     })
   }
   })
-
+}
 
 
 })
