@@ -1,10 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const fetch = require('fetch').fetchUrl;
 const mongoose = require('mongoose');
 const imageSchema = require('./Schemas/imageSearch');
-const URL = require('url').URL;
+
 const app = express()
 const API_KEY = process.env.API_KEY
 const dbURl = process.env.MONGODB_URI || 'mongodb://locahost/imagesearch'
@@ -16,7 +15,6 @@ const PORT = process.env.PORT || 3000
 console.log(PORT)
 app.set('view engine', 'ejs')
 
-app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
   res.redirect(`${PORT==3000 ? 'http' : 'https'}://${req.headers.host}/search/flowers?page=1`)
@@ -37,7 +35,8 @@ fetch(site[site.length-1].info, (err, meta, body)=>{
   else{
   res.render('search',{
   data: JSON.parse(body).hits,
-  page: req.query.page
+  page: req.query.page,
+  query: req.params.data
 })
   }
 })

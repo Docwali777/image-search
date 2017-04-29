@@ -1,8 +1,18 @@
-<h1>Search</h1>
-Page: <%= page %>
-<% data.map(d=>{ %>
- <p> <%= d.tags  %></p>
- <p> <a href="<%= d.webformatURL %>"><%= d.pageURL %></a></p>
-  <a href="<%= d.webformatURL %>"><img style='height: 70px;width:auto' src="<%= d.webformatURL %>" alt=""></a>
- <hr>
-<% }) %>
+<% include partials/header %>
+
+<div class="container">
+  <div>
+    <h1>Search Results</h1>
+    <h3>Search term: <%= query %></h3>
+    <hr>
+    <p>Page: <%= page %></p>
+    <hr>
+  </div>
+  <% data.map(d=>{ %>
+   <p> <strong>Tags: </strong><%= d.tags  %></p>
+   <p> <strong>Photo URL:</strong> <a href="<%= d.webformatURL %>"><%= d.pageURL %></a></p>
+    <a href="<%= d.webformatURL %>"><img style='height: 70px;width:auto' src="<%= d.webformatURL %>" alt=""></a>
+   <hr>
+  <% }) %>
+
+</div>
