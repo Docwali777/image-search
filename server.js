@@ -19,7 +19,6 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
-  console.log(req);
   res.redirect(`${http}://${req.headers.host}/search/flowers?page=1`)
 })
 
