@@ -45,7 +45,7 @@ app.route('/search/:data').get((req, res) => {
     let pic = new imageSchema({query: req.params.data, info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}&per_page=5`, date: new Date().toLocaleString()}).save((err) => {
       if (err) {
         console.log(err)
-      } else {
+      } else {console.log(req.url)
         imageSchema.find({
           query: req.params.data
         }, (err, site) => {
@@ -60,7 +60,8 @@ app.route('/search/:data').get((req, res) => {
                 port: req.headers.host,
                 protocol: PORT == 3000 ? 'http': 'https',
                 path: req.path,
-                query: JSON.stringify(req.query)
+                query: JSON.stringify(req.query),
+                url: `${PORT == 3000 ? 'http': 'https'}://${req.headers.host}${req.path}&page=${(req.query.page)}`
               })
             }
           })
