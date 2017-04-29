@@ -26,7 +26,9 @@ if(req.params.data === 'recent'){
   imageSchema.find({}, (err, site)=>{
     if(err){console.log(err)}
     else{
-      res.send(site.splice(0, 9))
+      res.render('recent', {
+        site: site.splice(-9, site.length-1)
+      })
     }
   })
 }
@@ -35,7 +37,7 @@ else
   let pic = new imageSchema({
     query: req.params.data,
     info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}&per_page=5`,
-    date: new Date()
+    date: new Date().toLocaleString()
   }).save((err)=>{
     if(err){console.log(err)}
   else {
