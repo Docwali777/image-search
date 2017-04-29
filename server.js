@@ -17,7 +17,8 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
-  res.redirect(`http://${req.headers.host}/search/flowers?page=1`)
+  console.log(req);
+  res.redirect(`https://${req.headers.host}/search/flowers?page=1`)
 })
 
 app.route('/search/:data')
@@ -33,9 +34,9 @@ app.route('/search/:data')
 fetch(site[site.length-1].info, (err, meta, body)=>{
   if(err){console.log('error')}
   else{
-  res.render('search',
-  {data: JSON.parse(body).hits}
-)
+  res.render('search',{
+  data: JSON.parse(body).hits
+})
   }
 })
 // res.send(site[site.length-1])
