@@ -17,11 +17,12 @@ app.set('view engine', 'ejs')
 
 
 app.get('/', (req, res) => {
-  res.redirect(`${PORT==3000 ? 'http' : 'https'}://${req.headers.host}/search/flowers?page=1`)
+  res.redirect(`${PORT==3000 ? 'http' : 'https'}://${req.headers.host}/search/flowers?page=2`)
 })
 
 app.route('/search/:data')
 .get((req, res) => {
+  console.log(req.params)
 if(req.params.data === 'recent'){
   imageSchema.find({}, (err, site)=>{
     if(err){console.log(err)}
@@ -31,6 +32,14 @@ if(req.params.data === 'recent'){
       })
     }
   })
+}
+else if(req.params.data === 'search'){
+imageSchema.find({}, (err, body)=>{
+  if(err){console.log(err)}
+  else {
+    console.log(body)
+  }
+})
 }
 else
 {
