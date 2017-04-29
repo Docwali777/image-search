@@ -22,9 +22,10 @@ app.get('/', (req, res) => {
 
 app.route('/search/:data')
 .get((req, res) => {
+
   let pic = new imageSchema({
     query: req.params.data,
-    info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}`,
+    info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}&per_page=5`,
     date: new Date()
   }).save((err)=>{
     if(err){console.log(err)}
