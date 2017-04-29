@@ -4,10 +4,10 @@ const ejs = require('ejs');
 const fetch = require('fetch').fetchUrl;
 const mongoose = require('mongoose');
 const imageSchema = require('./Schemas/imageSearch');
+const URL = require('url').URL;
 const app = express()
 const API_KEY = process.env.API_KEY
 const dbURl = process.env.MONGODB_URI || 'mongodb://locahost/imagesearch'
-
 
 mongoose.connect(dbURl)
 
@@ -16,32 +16,37 @@ app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.get('/', (req, res)=>{
-  console.log(req.headers.host)
+app.get('/', (req, res) => {
   res.redirect(`http://${req.headers.host}/search/flowers?page=1`)
 })
 
-app.get('/search/:data', (req, res)=>{ //route for search
-  console.log(req.params.data, req.query.page)
-  var pic = new imageSchema({
+app.route('/search/:data')
+.get((req, res) => {
+  let pic = new imageSchema({
     query: req.params.data,
     info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}`,
     date: new Date()
   }).save((err)=>{
-    if(err){console.log(err);}
-    else(console.log('pic saved'))
-  })
-  imageSchema.findOne({query: req.params.data}, (err, apiUrl)=>{
     if(err){console.log(err)}
-    else{
-fetch(apiUrl.info, (err, meta, url)=>{
-  res.send(JSON.parse(url))
+  else {
+    imageSchema.find({query: req.params.data}, (err, site)=>{
+fetch(site[site.length-1].info, (err, meta, body)=>{
+  if(err){console.log('error')}
+  else{
+  res.render('search',
+  {data: JSON.parse(body).hits}
+)
+  }
 })
-    }
+// res.send(site[site.length-1])
+    })
+  }
   })
 
+
+
 })
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
   console.log('Server connect on PORT: ${PORT}');
 })
