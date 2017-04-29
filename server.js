@@ -34,6 +34,7 @@ if(req.params.data === 'recent'){
 }
 else
 {
+  console.log(res.statusCode)
   let pic = new imageSchema({
     query: req.params.data,
     info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}&per_page=5`,
@@ -43,7 +44,7 @@ else
   else {
     imageSchema.find({query: req.params.data}, (err, site)=>{
 fetch(site[site.length-1].info, (err, meta, body)=>{
-  if(err){console.log('error')}
+  if(err){res.send(statusCode)}
   else{
   res.render('search',{
   data: JSON.parse(body).hits,

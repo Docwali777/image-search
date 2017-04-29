@@ -1,0 +1,11 @@
+<% include partials/header %>
+
+<div class="container">
+  <h1>Recent Searches</h1>
+  <%  site.map(d=>{ %>
+    <p><strong>Search Term: </strong><%= d.query %></p>
+    <p><strong>Date: </strong><%= d.date.toLocaleString() %></p>
+    <hr>
+  <% }) %>
+
+</div>
