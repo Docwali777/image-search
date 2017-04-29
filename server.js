@@ -12,13 +12,15 @@ const dbURl = process.env.MONGODB_URI || 'mongodb://locahost/imagesearch'
 mongoose.connect(dbURl)
 
 const PORT = process.env.PORT || 3000
+var http = PORT === 3000 ? 'http' : 'https'
+
 app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
   console.log(req);
-  res.redirect(`https://${req.headers.host}/search/flowers?page=1`)
+  res.redirect(`${http}://${req.headers.host}/search/flowers?page=1`)
 })
 
 app.route('/search/:data')
@@ -35,7 +37,8 @@ fetch(site[site.length-1].info, (err, meta, body)=>{
   if(err){console.log('error')}
   else{
   res.render('search',{
-  data: JSON.parse(body).hits
+  data: JSON.parse(body).hits,
+  page: req.query.page
 })
   }
 })
