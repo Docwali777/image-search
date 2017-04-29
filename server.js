@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 
 app.route('/search/:data').get((req, res) => {
 
-  if (req.params.data === 'recent' && req.query.page === undefined) {
+  if (req.params.data === 'recent') {
     imageSchema.find({}, (err, site) => {
       if (err) {
         console.log(err)
@@ -42,10 +42,10 @@ app.route('/search/:data').get((req, res) => {
       }
     })
   } else {
-    let pic = new imageSchema({query: req.params.data, info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}&per_page=5`, date: new Date().toLocaleString()}).save((err) => {
+    let pic = new imageSchema({query: req.params.data, info: `https://pixabay.com/api/?key=${API_KEY}&q=${req.params.data}&page=${req.query.page}`, date: new Date().toLocaleString()}).save((err) => {
       if (err) {
         console.log(err)
-      } else {console.log(req.url)
+      } else {
         imageSchema.find({
           query: req.params.data
         }, (err, site) => {
@@ -54,6 +54,7 @@ app.route('/search/:data').get((req, res) => {
               console.log(statusCode)
             } else {
               res.render('search', {
+                search: req.params.data,
                 data: JSON.parse(body).hits,
                 page: req.query.page,
                 query: req.params.data,
